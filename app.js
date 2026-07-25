@@ -223,6 +223,16 @@ function playBubblePopSound(time) {
 
 
 /**
+ * Helper: Resolve API endpoint URL (supports VS Code Live Server, direct file, or Python server)
+ */
+function getApiUrl(endpoint) {
+    if (window.location.protocol.startsWith("http") && (window.location.port === "8000" || window.location.port === "8001")) {
+        return endpoint;
+    }
+    return `http://localhost:8000${endpoint}`;
+}
+
+/**
  * Helper: Get current formatted time
  */
 function getFormattedTime() {
@@ -446,7 +456,10 @@ function updateGoalProgress() {
  * Key Event Handler (keydown / keyup)
  */
 function handleKeyEvent(e, type) {
-    // We only capture keyboard events if session is active
+    // Auto-start session on first keypress if inactive
+    if (!sessionActive && type === "keydown") {
+        startSession();
+    }
     if (!sessionActive) return;
     
     // Manage modifier keys state
@@ -716,7 +729,7 @@ btnStartSandbox.addEventListener("click", async () => {
     logSandboxConsole(`Launching Keylogger Simulator [Method: ${sandboxSelectedMethod}]...`, "system-msg");
     
     try {
-        const res = await fetch(`/api/logger/start?method=${sandboxSelectedMethod}`);
+        const res = await fetch(getApiUrl(`/api/logger/start?method=${sandboxSelectedMethod}`));
         const data = await res.json();
         
         if (data.status === "success") {
@@ -738,7 +751,7 @@ btnStartSandbox.addEventListener("click", async () => {
             logSandboxConsole(`Failed to start simulator: ${data.message}`, "console-line");
         }
     } catch (e) {
-        logSandboxConsole(`Connection error: ${e.message}`, "console-line");
+        logSandboxConsole(`⚠️ Python Security Server is offline. Please run 'python app.py' in your VS Code terminal to enable Win32 simulation.`, "console-line");
     }
 });
 
@@ -749,7 +762,7 @@ btnStopSandbox.addEventListener("click", async () => {
     clearInterval(sandboxPollInterval);
     
     try {
-        const res = await fetch("/api/logger/stop");
+        const res = await fetch(getApiUrl("/api/logger/stop"));
         const data = await res.json();
         
         if (data.status === "success") {
@@ -776,7 +789,7 @@ btnClearSandbox.addEventListener("click", () => {
 
 async function pollSandboxEvents() {
     try {
-        const res = await fetch("/api/logger/events");
+        const res = await fetch(getApiUrl("/api/logger/events"));
         const data = await res.json();
         
         if (data.events && data.events.length > 0) {
@@ -823,7 +836,7 @@ btnRunScan.addEventListener("click", async () => {
     healthStatus.className = "summary-value";
     
     try {
-        const res = await fetch("/api/detector/scan");
+        const res = await fetch(getApiUrl("/api/detector/scan"));
         const report = await res.json();
         
         // Print logs incrementally with tiny delays to look cool & premium
@@ -840,10 +853,10 @@ btnRunScan.addEventListener("click", async () => {
         printNextLog();
         
     } catch (e) {
-        logScanConsole(`Scanning error: ${e.message}`, "console-line");
+        logScanConsole(`⚠️ Python Security Server is offline. Please run 'python app.py' in your VS Code terminal to enable system diagnostics.`, "console-line");
         btnRunScan.disabled = false;
-        healthStatus.textContent = "Error";
-        healthStatus.className = "summary-value health-critical";
+        healthStatus.textContent = "Offline";
+        healthStatus.className = "summary-value health-warning";
     }
 });
 
