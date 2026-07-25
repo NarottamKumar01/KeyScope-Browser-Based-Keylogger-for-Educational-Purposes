@@ -1,325 +1,206 @@
+<div align="center">
+
 # ⌨️ KeyScope
+
 ### Browser-Based Keylogger for Educational & Cybersecurity Learning
 
-<p align="center">
+*A lightweight web application that demonstrates browser-based keystroke logging, real-time analytics, and keyboard event visualization using modern JavaScript.*
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/KeyScope?style=for-the-badge)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/KeyScope?style=for-the-badge)
-![GitHub issues](https://img.shields.io/github/issues/yourusername/KeyScope?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-success?style=for-the-badge)
+<br>
 
-</p>
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![MIT License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
----
-
-## 📖 Overview
-
-**KeyScope** is a browser-based keylogger developed using **HTML, CSS, and JavaScript** for educational and cybersecurity learning.
-
-The application demonstrates how keyboard events are captured inside a web browser using JavaScript event listeners. It records keystrokes in real time, maintains typing statistics, tracks modifier keys, generates event logs, and allows exporting reports in TXT and JSON formats.
-
-Unlike traditional system-level keyloggers, **KeyScope only captures keyboard events occurring within the active webpage**, making it suitable for learning browser event handling, JavaScript programming, and cybersecurity concepts in a safe environment.
-
-> **Educational Disclaimer**
->
-> This project is created **strictly for educational and cybersecurity awareness purposes**. It operates only within the active browser window and **does not capture system-wide keystrokes**.
+</div>
 
 ---
 
-# ✨ Features
+## 📖 About
+
+**KeyScope** is a browser-based keylogger built using **HTML, CSS, and JavaScript** to demonstrate how keyboard events are captured and processed within a web application.
+
+The application records keystrokes in real time, tracks typing activity, analyzes keyboard usage, and provides an interactive dashboard with session statistics and export functionality.
+
+Unlike traditional operating system keyloggers, **KeyScope only monitors keyboard events within the active browser page**, making it suitable for educational demonstrations, web development learning, and cybersecurity awareness.
+
+---
+
+## ✨ Features
 
 - ⌨️ Real-Time Keystroke Logging
-- 📊 Live Dashboard
+- 📊 Live Analytics Dashboard
 - 📈 Key Frequency Analysis
 - ⏱️ Session Duration Tracking
 - ⚡ Keys Per Second (KPS)
 - 🔑 Modifier Key Detection
 - 🎵 Keyboard Sound Simulation
 - 📜 Event Logging
-- 📄 Export TXT Reports
-- 📁 Export JSON Reports
+- 📄 TXT Report Export
+- 📁 JSON Report Export
 - 🌙 Dark / Light Theme
-- 💻 Responsive Interface
+- 📱 Responsive User Interface
 
 ---
 
-# 🚀 Demo
+## 📸 Preview
 
-### Home Dashboard
+> Replace these placeholders with screenshots after uploading them.
 
-```
-(Add Screenshot Here)
-```
+| Dashboard | Event Logs |
+|-----------|------------|
+| ![](screenshots/dashboard.png) | ![](screenshots/logs.png) |
 
-### Event Logs
-
-```
-(Add Screenshot Here)
-```
-
-### Statistics Dashboard
-
-```
-(Add Screenshot Here)
-```
-
-### Export Functionality
-
-```
-(Add Screenshot Here)
-```
+| Statistics | Export |
+|-----------|---------|
+| ![](screenshots/stats.png) | ![](screenshots/export.png) |
 
 ---
 
-# 🏗 System Architecture
+## 🏗️ System Architecture
 
-```
-                     User
-                       │
-                       ▼
+```text
+                    User
+                      │
+                      ▼
                Keyboard Input
-                       │
-                       ▼
-        JavaScript Event Listener
-             (keydown / keyup)
-                       │
-      ┌────────────────┼────────────────┐
-      │                │                │
-      ▼                ▼                ▼
+                      │
+                      ▼
+       JavaScript Event Listener
+           (keydown / keyup)
+                      │
+      ┌───────────────┼───────────────┐
+      ▼               ▼               ▼
  Session Manager   Event Logger   Audio Engine
-      │                │                │
-      └────────────┬───┴────────────────┘
-                   │
-                   ▼
-           Analytics Engine
+      │               │               │
+      └───────────────┴───────────────┘
+                      │
+                      ▼
+             Analytics Engine
       • Event Counter
       • Session Timer
-      • KPS
+      • Keys Per Second
       • Key Frequency
       • Modifier Keys
-                   │
-                   ▼
-          Dashboard Interface
-                   │
-                   ▼
-        TXT / JSON Report Export
+                      │
+                      ▼
+            Dashboard Interface
+                      │
+                      ▼
+          Export (TXT / JSON)
 ```
 
 ---
 
-# ⚙️ Workflow
+## ⚙️ Tech Stack
 
-```
-Start Session
-      │
-      ▼
-Keyboard Input
-      │
-      ▼
-Capture Key Events
-      │
-      ▼
-Process JavaScript Events
-      │
-      ├──────────────┐
-      ▼              ▼
-Update Stats     Store Logs
-      │              │
-      └──────┬───────┘
-             ▼
-     Update Dashboard
-             │
-             ▼
-      Export Reports
-```
+| Frontend | Browser APIs | Export |
+|----------|--------------|--------|
+| HTML5 | Keyboard Events API | TXT |
+| CSS3 | DOM API | JSON |
+| JavaScript | Web Audio API | Blob API |
 
 ---
 
-# 💻 Technology Stack
+## 📂 Project Structure
 
-| Technology | Purpose |
-|------------|---------|
-| HTML5 | Structure |
-| CSS3 | User Interface |
-| JavaScript | Application Logic |
-| DOM API | Dynamic Updates |
-| Keyboard Events API | Capture Keyboard Input |
-| Web Audio API | Keyboard Sound |
-| Blob API | TXT & JSON Export |
-
----
-
-# 📂 Project Structure
-
-```
+```text
 KeyScope/
-
 │
-
 ├── assets/
-
-│ ├── css/
-
-│ ├── js/
-
-│ ├── sounds/
-
-│ └── icons/
-
+│   ├── css/
+│   ├── js/
+│   ├── icons/
+│   └── sounds/
 │
-
 ├── screenshots/
-
-│
-
 ├── docs/
-
 │
-
 ├── index.html
-
 ├── README.md
-
 ├── LICENSE
-
-├── CONTRIBUTING.md
-
 └── .gitignore
 ```
 
 ---
 
-# ⚡ Installation
+## 🚀 Getting Started
 
 Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/KeyScope.git
+git clone https://github.com/YOUR_USERNAME/KeyScope.git
 ```
 
-Move into project directory
+Go to the project directory
 
 ```bash
 cd KeyScope
 ```
 
-Open
+Run the application by opening
 
 ```text
 index.html
 ```
 
-using your preferred browser.
+in your preferred web browser.
 
 ---
 
-# 🎯 Applications
+## 🎯 Use Cases
 
 - Cybersecurity Education
 - Ethical Hacking Demonstrations
-- Browser Event Analysis
-- JavaScript Learning
-- Keyboard Event Monitoring
-- Academic Projects
-- User Interaction Analytics
+- JavaScript Event Handling
+- Browser API Learning
+- Keyboard Interaction Analysis
+- Academic Mini Projects
 
 ---
 
-# 📊 Project Highlights
+## 🛣️ Roadmap
 
-✔ Browser-Based Keylogger
-
-✔ Event Logging
-
-✔ Live Dashboard
-
-✔ Session Management
-
-✔ Keyboard Analytics
-
-✔ Modifier Key Tracking
-
-✔ Export Reports
-
-✔ Responsive UI
+- ✅ Browser-based keystroke logging
+- ✅ Live dashboard
+- ✅ Session management
+- ✅ Event logging
+- ✅ TXT & JSON export
+- ⏳ Keyboard heatmap
+- ⏳ CSV/PDF export
+- ⏳ AI-based typing analysis
+- ⏳ Cloud synchronization
 
 ---
 
-# 🚀 Future Scope
+## 👥 Contributors
 
-- AI-based Typing Behaviour Analysis
-- Keyboard Heatmap
-- CSV Export
-- PDF Report Generation
-- Cloud Synchronization
-- User Authentication
-- Keyboard Shortcut Detection
-- Machine Learning Analytics
+- **Narottam Kumar**
+- **Simardeep Singh Bhatti**
+- **Maroof Ahmad Malik**
+- **Sushil Dhiman**
 
 ---
 
-# 👨‍💻 Contributors
-
-<table>
-<tr align="center">
-
-<td>
-
-<b>Narottam Kumar</b>
-
-</td>
-
-<td>
-
-<b>Simardeep Singh Bhatti</b>
-
-</td>
-
-<td>
-
-<b>Maroof Ahmad Malik</b>
-
-</td>
-
-<td>
-
-<b>Sushil Dhiman</b>
-
-</td>
-
-</tr>
-</table>
-
----
-
-# 🤝 Contributing
-
-Contributions, suggestions, and improvements are welcome.
-
-1. Fork the repository
-2. Create a new branch
-3. Commit your changes
-4. Push the branch
-5. Open a Pull Request
-
----
-
-# 📜 License
+## 📄 License
 
 This project is licensed under the **MIT License**.
 
 ---
 
-# ⭐ Support
+## ⚠️ Educational Disclaimer
 
-If you found this project useful, please consider giving it a ⭐ on GitHub.
+This project was developed **strictly for educational and cybersecurity learning purposes**.
 
-It motivates us to continue improving the project.
+It captures keyboard events **only within the active browser page** and **does not function as a system-wide keylogger** or monitor input from other applications.
 
 ---
 
-<p align="center">
+<div align="center">
+
+### ⭐ If you found this project helpful, consider giving it a star!
 
 Made with ❤️ using HTML, CSS & JavaScript
 
-</p>
+</div>
