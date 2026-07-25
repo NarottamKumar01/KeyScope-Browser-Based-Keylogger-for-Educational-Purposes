@@ -13,6 +13,9 @@ RIDEV_INPUTSINK = 0x00000100
 HWND_MESSAGE = -3
 
 # Types
+HCURSOR = wintypes.HANDLE
+HICON = wintypes.HANDLE
+HBRUSH = wintypes.HANDLE
 HOOKPROC = ctypes.WINFUNCTYPE(ctypes.c_int64, ctypes.c_int, wintypes.WPARAM, wintypes.LPARAM)
 WNDPROC = ctypes.WINFUNCTYPE(ctypes.c_int64, wintypes.HWND, wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM)
 
@@ -68,12 +71,12 @@ class WNDCLASSEXW(ctypes.Structure):
         ("cbClsExtra", ctypes.c_int),
         ("cbWndExtra", ctypes.c_int),
         ("hInstance", wintypes.HINSTANCE),
-        ("hIcon", wintypes.HICON),
-        ("hCursor", wintypes.HCURSOR),
-        ("hbrBackground", wintypes.HBRUSH),
+        ("hIcon", HICON),
+        ("hCursor", HCURSOR),
+        ("hbrBackground", HBRUSH),
         ("lpszMenuName", wintypes.LPCWSTR),
         ("lpszClassName", wintypes.LPCWSTR),
-        ("hIconSm", wintypes.HICON)
+        ("hIconSm", HICON)
     ]
 
 class Win32Keylogger:

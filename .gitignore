@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Log files
+keyboard_log_*.txt
+*.log
+
+# IDE & System files
+.vscode/
+.idea/
+.DS_Store
