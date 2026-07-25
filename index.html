@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Event Demonstration Dashboard</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <span class="status-indicator ready" id="status-indicator"></span>
+                <h1 class="app-title">Keyboard Event Demonstration</h1>
+            </div>
+            <div class="header-actions">
+                <button id="theme-toggle" class="btn-theme-toggle" aria-label="Toggle Theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Tabs Navigation -->
+        <nav class="app-nav">
+            <button class="nav-btn active" data-target="tab-visualizer">
+                <span class="nav-icon">⌨️</span> Keyboard Event Visualizer
+            </button>
+            <button class="nav-btn" data-target="tab-sandbox">
+                <span class="nav-icon">🛡️</span> Keylogger Sandbox
+            </button>
+            <button class="nav-btn" data-target="tab-detector">
+                <span class="nav-icon">🔍</span> Security Detection Center
+            </button>
+        </nav>
+
+        <!-- Tabs Content Container -->
+        <div class="tabs-container">
+            
+            <!-- Tab 1: Visualizer (Existing Dashboard Grid) -->
+            <div id="tab-visualizer" class="tab-content active">
+                <div class="dashboard-grid">
+                    
+                    <!-- Left Panel: Controls, Stats and Virtual Keyboard -->
+                    <div class="main-panel">
+                        
+                        <!-- Session Metrics Cards -->
+                        <section class="stats-grid">
+                            <div class="stat-card" id="card-status">
+                                <div class="stat-label">Session Status</div>
+                                <div class="stat-value text-glow" id="status-text">Ready</div>
+                            </div>
+                            <div class="stat-card" id="card-start-time">
+                                <div class="stat-label">Start Time</div>
+                                <div class="stat-value" id="start-time">--:--:--</div>
+                            </div>
+                            <div class="stat-card" id="card-duration">
+                                <div class="stat-label">Duration</div>
+                                <div class="stat-value" id="duration">00:00:00</div>
+                            </div>
+                            <div class="stat-card" id="card-events">
+                                <div class="stat-label">Events Count</div>
+                                <div class="stat-value text-accent" id="events-count">0</div>
+                            </div>
+                            <div class="stat-card" id="card-kps">
+                                <div class="stat-label">Keys / Sec (KPS)</div>
+                                <div class="stat-value" id="kps-value">0.0</div>
+                            </div>
+                        </section>
+
+                        <!-- Controls & Audio Panel -->
+                        <section class="controls-panel">
+                            <div class="action-buttons">
+                                <button id="btn-start" class="btn btn-primary">Start Session</button>
+                                <button id="btn-stop" class="btn btn-secondary" disabled>Stop</button>
+                                <button id="btn-clear" class="btn btn-danger">Clear</button>
+                                
+                                <div class="export-dropdown-wrapper">
+                                    <button id="btn-export" class="btn btn-export">Export Log ▾</button>
+                                    <div class="export-dropdown-content" id="export-dropdown">
+                                        <button id="btn-export-txt">Export as Plain Text (.txt)</button>
+                                        <button id="btn-export-json">Export as JSON (.json)</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="audio-controls">
+                                <div class="switch-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="sound-toggle" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span class="control-label">Key Sounds</span>
+                                </div>
+                                <div class="select-wrapper">
+                                    <select id="sound-profile" class="select-input">
+                                        <option value="cherry-blue">Cherry MX Blue (Clicky)</option>
+                                        <option value="cherry-brown">Cherry MX Brown (Tactile)</option>
+                                        <option value="cherry-red">Cherry MX Red (Linear)</option>
+                                        <option value="typewriter">Retro Typewriter</option>
+                                        <option value="bubble-wrap">Bubble Wrap Popping</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Key Goal Progress Bar -->
+                        <section class="goal-container">
+                            <div class="goal-header">
+                                <span class="goal-label">Keystroke Goal Progress</span>
+                                <div class="goal-inputs">
+                                    <span id="goal-fraction">0 / 200</span>
+                                    <input type="number" id="goal-target" value="200" min="10" max="10000" class="goal-input" title="Set Target Keystroke Goal">
+                                </div>
+                            </div>
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill" id="goal-progress-fill" style="width: 0%"></div>
+                            </div>
+                            <div class="goal-footer">
+                                <span id="goal-percentage">0% Completed</span>
+                            </div>
+                        </section>
+
+                        <!-- Virtual Keyboard Component -->
+                        <section class="keyboard-container">
+                            <div class="keyboard" id="v-keyboard">
+                                <!-- Row 1: Function keys & Esc -->
+                                <div class="keyboard-row">
+                                    <div class="key key-esc" data-code="Escape">Esc</div>
+                                    <div class="key key-fn" data-code="F1">F1</div>
+                                    <div class="key key-fn" data-code="F2">F2</div>
+                                    <div class="key key-fn" data-code="F3">F3</div>
+                                    <div class="key key-fn" data-code="F4">F4</div>
+                                    <div class="key-gap"></div>
+                                    <div class="key key-fn" data-code="F5">F5</div>
+                                    <div class="key key-fn" data-code="F6">F6</div>
+                                    <div class="key key-fn" data-code="F7">F7</div>
+                                    <div class="key key-fn" data-code="F8">F8</div>
+                                    <div class="key-gap"></div>
+                                    <div class="key key-fn" data-code="F9">F9</div>
+                                    <div class="key key-fn" data-code="F10">F10</div>
+                                    <div class="key key-fn" data-code="F11">F11</div>
+                                    <div class="key key-fn" data-code="F12">F12</div>
+                                </div>
+                                <!-- Row 2: Numbers -->
+                                <div class="keyboard-row">
+                                    <div class="key" data-code="Backquote">`</div>
+                                    <div class="key" data-code="Digit1">1</div>
+                                    <div class="key" data-code="Digit2">2</div>
+                                    <div class="key" data-code="Digit3">3</div>
+                                    <div class="key" data-code="Digit4">4</div>
+                                    <div class="key" data-code="Digit5">5</div>
+                                    <div class="key" data-code="Digit6">6</div>
+                                    <div class="key" data-code="Digit7">7</div>
+                                    <div class="key" data-code="Digit8">8</div>
+                                    <div class="key" data-code="Digit9">9</div>
+                                    <div class="key" data-code="Digit0">0</div>
+                                    <div class="key" data-code="Minus">-</div>
+                                    <div class="key" data-code="Equal">=</div>
+                                    <div class="key key-backspace key-grow" data-code="Backspace">Backspace</div>
+                                </div>
+                                <!-- Row 3: Tab QWERTY -->
+                                <div class="keyboard-row">
+                                    <div class="key key-tab" data-code="Tab">Tab</div>
+                                    <div class="key" data-code="KeyQ">Q</div>
+                                    <div class="key" data-code="KeyW">W</div>
+                                    <div class="key" data-code="KeyE">E</div>
+                                    <div class="key" data-code="KeyR">R</div>
+                                    <div class="key" data-code="KeyT">T</div>
+                                    <div class="key" data-code="KeyY">Y</div>
+                                    <div class="key" data-code="KeyU">U</div>
+                                    <div class="key" data-code="KeyI">I</div>
+                                    <div class="key" data-code="KeyO">O</div>
+                                    <div class="key" data-code="KeyP">P</div>
+                                    <div class="key" data-code="BracketLeft">[</div>
+                                    <div class="key" data-code="BracketRight">]</div>
+                                    <div class="key key-backslash" data-code="Backslash">\</div>
+                                </div>
+                                <!-- Row 4: Caps ASDF -->
+                                <div class="keyboard-row">
+                                    <div class="key key-caps" data-code="CapsLock">Caps</div>
+                                    <div class="key" data-code="KeyA">A</div>
+                                    <div class="key" data-code="KeyS">S</div>
+                                    <div class="key" data-code="KeyD">D</div>
+                                    <div class="key" data-code="KeyE" style="display:none">E</div> <!-- hidden layout keeper -->
+                                    <div class="key" data-code="KeyF">F</div>
+                                    <div class="key" data-code="KeyG">G</div>
+                                    <div class="key" data-code="KeyH">H</div>
+                                    <div class="key" data-code="KeyJ">J</div>
+                                    <div class="key" data-code="KeyK">K</div>
+                                    <div class="key" data-code="KeyL">L</div>
+                                    <div class="key" data-code="Semicolon">;</div>
+                                    <div class="key" data-code="Quote">'</div>
+                                    <div class="key key-enter key-grow" data-code="Enter">Enter</div>
+                                </div>
+                                <!-- Row 5: Shift ZXCV -->
+                                <div class="keyboard-row">
+                                    <div class="key key-shift-l" data-code="ShiftLeft">Shift</div>
+                                    <div class="key" data-code="KeyZ">Z</div>
+                                    <div class="key" data-code="KeyX">X</div>
+                                    <div class="key" data-code="KeyC">C</div>
+                                    <div class="key" data-code="KeyV">V</div>
+                                    <div class="key" data-code="KeyB">B</div>
+                                    <div class="key" data-code="KeyN">N</div>
+                                    <div class="key" data-code="KeyM">M</div>
+                                    <div class="key" data-code="Comma">,</div>
+                                    <div class="key" data-code="Period">.</div>
+                                    <div class="key" data-code="Slash">/</div>
+                                    <div class="key key-shift-r key-grow" data-code="ShiftRight">Shift</div>
+                                </div>
+                                <!-- Row 6: Modifiers & Space -->
+                                <div class="keyboard-row">
+                                    <div class="key key-modifier" data-code="ControlLeft">Ctrl</div>
+                                    <div class="key key-modifier" data-code="MetaLeft">Win</div>
+                                    <div class="key key-modifier" data-code="AltLeft">Alt</div>
+                                    <div class="key key-space" data-code="Space">Space</div>
+                                    <div class="key key-modifier" data-code="AltRight">Alt</div>
+                                    <div class="key key-modifier" data-code="MetaRight">Win</div>
+                                    <div class="key key-modifier" data-code="ControlRight">Ctrl</div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <!-- Right Panel: Live Logs and Key Metrics -->
+                    <div class="side-panel">
+                        
+                        <!-- Active Modifiers State -->
+                        <section class="card modifiers-card">
+                            <h2 class="section-title">Modifier Keys State</h2>
+                            <div class="modifiers-indicators">
+                                <div class="modifier-pill" id="mod-ctrl">Ctrl</div>
+                                <div class="modifier-pill" id="mod-shift">Shift</div>
+                                <div class="modifier-pill" id="mod-alt">Alt</div>
+                                <div class="modifier-pill" id="mod-meta">Meta (Win/Cmd)</div>
+                            </div>
+                        </section>
+
+                        <!-- Recent Events Terminal -->
+                        <section class="card terminal-card">
+                            <div class="terminal-header">
+                                <h2 class="section-title">Recent Events</h2>
+                                <span class="terminal-badge" id="event-pulse-badge">Live feed</span>
+                            </div>
+                            <div class="terminal-log" id="event-log-terminal">
+                                <div class="terminal-line system-msg">Dashboard ready. Click 'Start Session' and type anywhere on the screen.</div>
+                            </div>
+                        </section>
+
+                        <!-- Analytics / Frequency Counter -->
+                        <section class="card frequency-card">
+                            <h2 class="section-title">Key Heatmap / Frequency</h2>
+                            <div class="freq-chart" id="freq-chart-container">
+                                <div class="empty-chart-msg" id="empty-chart-msg">No keys registered in this session. Start typing to view frequency statistics.</div>
+                                <div class="bar-chart-list" id="bar-chart-list" style="display: none;"></div>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Keylogger Sandbox -->
+            <div id="tab-sandbox" class="tab-content">
+                <div class="sandbox-grid">
+                    <!-- Sandbox Control Panel -->
+                    <div class="card sandbox-control-card">
+                        <h2 class="section-title">Keylogger Simulation Panel</h2>
+                        <p class="description-text">
+                            Select a Windows-native keystroke logging methodology. Launch the simulation, type in <strong>any application</strong> (Notepad, browser, etc.), and observe how the keys are logged globally.
+                        </p>
+                        
+                        <div class="simulation-selector">
+                            <div class="sim-option active" data-method="hook">
+                                <div class="sim-option-header">
+                                    <span class="sim-title">Low-Level Keyboard Hook</span>
+                                    <span class="sim-api-tag">WH_KEYBOARD_LL</span>
+                                </div>
+                                <div class="sim-desc">Registers a global callback in the Windows message hook chain. The OS redirects every keystroke event to the callback before dispatching it to target applications.</div>
+                            </div>
+                            
+                            <div class="sim-option" data-method="polling">
+                                <div class="sim-option-header">
+                                    <span class="sim-title">Asynchronous Key State Polling</span>
+                                    <span class="sim-api-tag">GetAsyncKeyState</span>
+                                </div>
+                                <div class="sim-desc">Loops periodically checking the virtual key state of all 256 keys. Captures global keypresses asynchronously without hooking the event chain.</div>
+                            </div>
+                            
+                            <div class="sim-option" data-method="raw_input">
+                                <div class="sim-option-header">
+                                    <span class="sim-title">Raw Input Interceptor</span>
+                                    <span class="sim-api-tag">RegisterRawInputDevices</span>
+                                </div>
+                                <div class="sim-desc">Registers a background window class to listen directly to the keyboard hardware interface, bypassing message hooks and polling loops.</div>
+                            </div>
+                        </div>
+
+                        <div class="sandbox-actions">
+                            <button id="btn-start-sandbox" class="btn btn-primary">Launch Simulator</button>
+                            <button id="btn-stop-sandbox" class="btn btn-danger" disabled>Terminate Simulator</button>
+                        </div>
+                        
+                        <div class="sandbox-status-bar">
+                            <span class="status-dot offline" id="sandbox-status-dot"></span>
+                            <span class="status-text" id="sandbox-status-text">Simulator Status: Offline</span>
+                        </div>
+                    </div>
+
+                    <!-- Live Intercepted Output Console -->
+                    <div class="card sandbox-console-card">
+                        <div class="console-header">
+                            <h2 class="section-title">Intercepted Keystrokes Log</h2>
+                            <span class="console-badge" id="sandbox-intercept-badge">Buffer empty</span>
+                        </div>
+                        <div class="console-output" id="sandbox-console-output">
+                            <div class="console-line system-msg">Launch the simulator and start typing to intercept keystrokes.</div>
+                        </div>
+                        <div class="console-actions">
+                            <button id="btn-clear-sandbox" class="btn btn-secondary">Clear Logs</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Security Detection Center -->
+            <div id="tab-detector" class="tab-content">
+                <div class="detector-grid">
+                    
+                    <!-- Left Panel: Controls, Gauges and Terminal -->
+                    <div class="detector-left">
+                        
+                        <div class="card scanner-control-card">
+                            <h2 class="section-title">Threat Diagnostic Scanner</h2>
+                            <p class="description-text">
+                                Perform a real-time heuristic security scan. The engine inspects running processes, parses executable import tables (IAT) for keyboard hooks, checks raw input sinks, and calculates risk indices.
+                            </p>
+                            <div class="scanner-button-wrapper">
+                                <button id="btn-run-scan" class="btn btn-primary">Run Heuristic Diagnostic Scan</button>
+                            </div>
+                            
+                            <div class="scan-metrics">
+                                <div class="threat-gauge-wrapper">
+                                    <svg class="threat-gauge-svg" viewBox="0 0 120 120">
+                                        <circle class="gauge-bg" cx="60" cy="60" r="50"></circle>
+                                        <circle class="gauge-fill" id="gauge-fill-circle" cx="60" cy="60" r="50" style="stroke-dasharray: 314.16; stroke-dashoffset: 314.16;"></circle>
+                                    </svg>
+                                    <div class="threat-gauge-text">
+                                        <span class="threat-gauge-value" id="threat-gauge-pct">0%</span>
+                                        <span class="threat-gauge-label">Risk Level</span>
+                                    </div>
+                                </div>
+                                <div class="threat-summary">
+                                    <div class="summary-item">
+                                        <span class="summary-label">System Health:</span>
+                                        <span class="summary-value health-secure" id="health-status">Secure</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="summary-label">Raw Listeners:</span>
+                                        <span class="summary-value" id="raw-sink-count">0</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="summary-label">Flagged Processes:</span>
+                                        <span class="summary-value" id="flagged-count">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card scan-console-card">
+                            <h2 class="section-title">Diagnostic Scanner Console</h2>
+                            <div class="scan-console" id="scan-console-log">
+                                <div class="console-line system-msg">Scanner ready. Press "Run Heuristic Diagnostic Scan" to audit systems.</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Panel: Flagged Processes Table -->
+                    <div class="detector-right">
+                        <div class="card process-matrix-card">
+                            <h2 class="section-title">Suspicious Interception Matrix</h2>
+                            <div class="table-container">
+                                <table class="process-table" id="process-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Process Name</th>
+                                            <th>PID</th>
+                                            <th>Threat Index</th>
+                                            <th>Analysis / Reasons</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="process-table-body">
+                                        <tr>
+                                            <td colspan="4" class="empty-table-msg">No scans performed yet. Click the button to inspect active memory.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Educational Security Section -->
+                <div class="card defense-guide-card">
+                    <h2 class="section-title">Keylogger Interception & Defensive Countermeasures</h2>
+                    <div class="defense-grid">
+                        <div class="defense-column">
+                            <h3>🔍 Detection Frameworks</h3>
+                            <div class="defense-item">
+                                <strong>Import Address Table Auditing</strong>
+                                <p>Detectors inspect compiled headers of running executables to search for USER32 exports related to hooks, polling, or raw input (e.g. <code>SetWindowsHookExW</code>). This catches compiled keyloggers instantly before runtime execution.</p>
+                            </div>
+                            <div class="defense-item">
+                                <strong>Behavioral Heuristics</strong>
+                                <p>Monitoring API call frequency. Polling-based loggers frequently query <code>GetAsyncKeyState</code> in a tight loop, producing recognizable CPU footprints and repetitive context-switching loops.</p>
+                            </div>
+                            <div class="defense-item">
+                                <strong>Raw Device Auditing</strong>
+                                <p>Querying the OS device table using <code>GetRegisteredRawInputDevices</code> to trace invisible windows listening directly to keyboard hardware interrupts.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="defense-column">
+                            <h3>🛡️ System Defense & Mitigation</h3>
+                            <div class="defense-item">
+                                <strong>UAC Isolation (Secure Desktops)</strong>
+                                <p>Sensitive input dialogs (like passwords) should be prompted in isolated system screens (Secure Desktops). Windows blocks global user-mode message hooks and window messages on the secure layout.</p>
+                            </div>
+                            <div class="defense-item">
+                                <strong>Keystroke Scrambling & Hook Bypasses</strong>
+                                <p>Anti-keyloggers inject random character packets directly into the input queue or load low-level keyboard filter drivers to mask keys with garbage data, decrypting it only in target secure containers.</p>
+                            </div>
+                            <div class="defense-item">
+                                <strong>Dynamic Hook Unloading</strong>
+                                <p>Security engines routinely inspect the low-level hook descriptor list and call <code>UnhookWindowsHookEx</code> on unregistered or unsigned modules to sever their intercept links.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
