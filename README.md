@@ -1,150 +1,54 @@
-<div align="center">
+# 🚀 KeyScope
 
-# ⌨️ KeyScope
+> **Browser-Based Keyboard Event Analyzer for Educational & Cybersecurity Learning**
 
-### Browser-Based Keylogger for Educational & Cybersecurity Learning
+KeyScope is an interactive web application that demonstrates real-time keyboard event monitoring inside a web browser. It visualizes key presses, tracks typing statistics, displays live analytics, and provides an intuitive dashboard for understanding browser keyboard events.
 
-*A lightweight web application that demonstrates browser-based keyboard event monitoring, real-time analytics, and typing behavior visualization using HTML, CSS, and JavaScript.*
-
-<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
-<img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
-<img src="https://img.shields.io/badge/License-MIT-success?style=for-the-badge"/>
+> ⚠️ This project is developed strictly for **educational and cybersecurity awareness purposes**.
 
 ---
 
-**Real-Time Logging • Analytics Dashboard • Typing Statistics • Export Reports**
+## ✨ Features
 
-</div>
-
----
-
-# 📖 Overview
-
-KeyScope is an educational browser-based keylogger developed to demonstrate how keyboard events are captured, processed, analyzed, and visualized inside a web browser.
-
-The project records keyboard activity **only within the active browser window**, making it suitable for learning JavaScript event handling, browser APIs, and cybersecurity concepts in a safe environment.
-
-Unlike operating-system keyloggers, this project **cannot monitor keystrokes outside the web page**.
-
----
-
-# ✨ Features
-
-- ⌨️ Real-Time Keyboard Event Monitoring
-- 📊 Interactive Analytics Dashboard
-- 📈 Key Frequency Analysis
+- ⌨️ Real-Time Keyboard Event Visualization
+- 📊 Live Session Analytics
+- 🔥 Keyboard Heatmap
+- 📝 Recent Event Logger
 - ⚡ Typing Speed (Keys Per Second)
-- 🕒 Session Duration Tracking
-- 🔑 Modifier Key Detection
 - 🎵 Keyboard Sound Simulation
-- 📄 TXT Export
-- 📁 JSON Export
-- 🌙 Dark Theme
+- 🌙 Dark Mode Interface
+- 📂 Export Session Logs
 - 📱 Responsive Design
 
 ---
 
-# 📸 Project Preview
+## 🛠️ Tech Stack
 
-## Home Page
-
-> Replace with your screenshot
-
-![Home](screenshots/home.png)
+- HTML5
+- CSS3
+- JavaScript
 
 ---
 
-## Dashboard
-
-![Dashboard](screenshots/dashboard.png)
-
----
-
-## Event Logger
-
-![Logger](screenshots/logger.png)
-
----
-
-## Statistics
-
-![Statistics](screenshots/statistics.png)
-
----
-
-## Export Report
-
-![Export](screenshots/export.png)
-
----
-
-# 🏗️ System Architecture
+## 📁 Project Structure
 
 ```text
-                  User
-                    │
-                    ▼
-             Keyboard Input
-                    │
-                    ▼
-        JavaScript Event Listener
-          (keydown / keyup)
-                    │
-        ┌───────────┼───────────┐
-        ▼           ▼           ▼
- Event Logger  Session Manager  Audio Engine
-        │           │           │
-        └───────────┼───────────┘
-                    ▼
-            Analytics Engine
-      • Typing Speed
-      • Key Frequency
-      • Session Time
-      • Event Counter
-                    │
-                    ▼
-          Dashboard Interface
-                    │
-                    ▼
-         Export (TXT / JSON)
-```
-
----
-
-# 🛠️ Technology Stack
-
-| Category | Technologies |
-|----------|--------------|
-| Frontend | HTML5, CSS3, JavaScript |
-| Browser APIs | Keyboard Events API, DOM API, Web Audio API |
-| Data Export | Blob API, JSON |
-
----
-
-# 📂 Project Structure
-
-```text
-KeyScope
+KeyScope/
 │
 ├── index.html
 ├── styles.css
 ├── app.js
+├── README.md
 ├── app.py
+├── PROJECTMain.py
 ├── detector_engine.py
 ├── win32_keylogger.py
-├── PROJECTMain.py
-│
-├── screenshots/
-│
-├── docs/
-│
-└── README.md
+└── keyboard-event-demonstration.zip
 ```
 
 ---
 
-# 🚀 Getting Started
+## 🚀 Getting Started
 
 Clone the repository
 
@@ -152,21 +56,23 @@ Clone the repository
 git clone https://github.com/NarottamKumar01/KeyScope-Browser-Based-Keylogger-for-Educational-Purposes.git
 ```
 
-Open the project
+Move into the project directory
 
 ```bash
-cd https://github.com/NarottamKumar01/KeyScope-Browser-Based-Keylogger-for-Educational-Purposes
+cd KeyScope-Browser-Based-Keylogger-for-Educational-Purposes
 ```
 
-Launch
-
-```text
-Open index.html in your browser
-```
+Open **index.html** in your browser or run the project using **VS Code Live Server**.
 
 ---
 
-# 🎯 Learning Objectives
+## 📸 Preview
+
+> Add screenshots here after completing the project.
+
+---
+
+## 🎯 Educational Objectives
 
 This project demonstrates:
 
@@ -174,54 +80,37 @@ This project demonstrates:
 - Event Handling
 - DOM Manipulation
 - Browser APIs
-- User Activity Monitoring
-- Frontend Analytics
+- Interactive Dashboard Design
 - Cybersecurity Awareness
 
 ---
 
-# 🛣️ Future Improvements
+## 📌 Future Enhancements
 
-- AI-Based Typing Analysis
-- Keyboard Heatmap
+- PDF Report Export
 - CSV Export
-- PDF Report Generation
+- Session History
+- AI Typing Pattern Analysis
 - User Authentication
-- Database Integration
-- Cloud Dashboard
-- Real-Time Monitoring
+- Database Support
+- Interactive Charts
 
 ---
 
-# 👥 Contributors
+## ⚠️ Disclaimer
 
-- **Narottam Kumar**
-- **Simardeep Singh Bhatti**
-- **Maroof Ahmad Malik**
-- **Sushil Dhiman**
+This project only captures keyboard events **inside the browser window** after a user starts a session. It **does not function as a system-wide keylogger** and is intended solely for educational and research purposes.
 
 ---
 
-# 📜 License
+## 📜 License
 
-This project is licensed under the **MIT License**.
-
----
-
-# ⚠️ Disclaimer
-
-This project has been developed **strictly for educational, research, and cybersecurity awareness purposes.**
-
-It captures keyboard events **only inside the active browser window** and **does not function as a system-wide keylogger**.
-
-The authors do not encourage or support the misuse of this project for unauthorized monitoring or malicious activities.
+This project is licensed under the MIT License.
 
 ---
 
-<div align="center">
+## 👨‍💻 Author
 
-### ⭐ If you found this project interesting, consider giving it a star!
+**Narottam Kumar**
 
-Made with ❤️ by Team **ByteShield**
-
-</div>
+⭐ If you found this project useful, consider giving it a star.
