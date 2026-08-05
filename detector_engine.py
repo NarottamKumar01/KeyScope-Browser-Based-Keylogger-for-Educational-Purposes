@@ -263,26 +263,37 @@ def check_registered_raw_input_devices():
     Returns list of matching keyboard sinks.
     """
     user32 = ctypes.windll.user32
+
+    # Declare argtypes so Python 3.13 passes correct types
+    user32.GetRegisteredRawInputDevices.argtypes = [
+        ctypes.c_void_p, ctypes.POINTER(wintypes.UINT), wintypes.UINT
+    ]
+    user32.GetRegisteredRawInputDevices.restype = wintypes.UINT
+
     num_devices = wintypes.UINT(0)
-    cb_size = wintypes.UINT(ctypes.sizeof(RAWINPUTDEVICE))
-    
+    cb_size     = wintypes.UINT(ctypes.sizeof(RAWINPUTDEVICE))
+
+    # First call with NULL buffer to get count
     res = user32.GetRegisteredRawInputDevices(None, ctypes.byref(num_devices), cb_size)
-    if res == -1:
+    # Returns (UINT)-1 on error – compare as signed
+    if ctypes.c_int(res).value == -1:
         return []
-        
+
     dev_list = []
     if num_devices.value > 0:
         devices = (RAWINPUTDEVICE * num_devices.value)()
-        res = user32.GetRegisteredRawInputDevices(devices, ctypes.byref(num_devices), cb_size)
-        if res != -1:
-            for i in range(res):
-                # usUsagePage = 1, usUsage = 6 corresponds to Keyboard device
+        res = user32.GetRegisteredRawInputDevices(
+            ctypes.byref(devices), ctypes.byref(num_devices), cb_size
+        )
+        if ctypes.c_int(res).value != -1:
+            for i in range(num_devices.value):
+                # usUsagePage = 1, usUsage = 6 → Keyboard
                 if devices[i].usUsagePage == 1 and devices[i].usUsage == 6:
                     dev_list.append({
                         "usage_page": devices[i].usUsagePage,
-                        "usage": devices[i].usUsage,
-                        "flags": devices[i].dwFlags,
-                        "hwnd": devices[i].hwndTarget
+                        "usage":      devices[i].usUsage,
+                        "flags":      devices[i].dwFlags,
+                        "hwnd":       devices[i].hwndTarget,
                     })
     return dev_list
 
